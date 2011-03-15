@@ -4,6 +4,8 @@ require("awful.autofocus")
 require("awful.rules")
 -- Theme handling library
 require("beautiful")
+-- Additional widgets library
+require("wicked")
 -- Notification library
 require("naughty")
 
@@ -16,6 +18,7 @@ beautiful.init("/usr/share/awesome/themes/default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "x-terminal-emulator"
+browser = "x-www-browser"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -45,11 +48,23 @@ layouts =
 -- }}}
 
 -- {{{ Tags
+--term = tag({ name = 'term', layout = 'fair' })
+--term.screen = 1
+--term.selected = true
+--net = tag({ name = 'net', layout = 'max' })
+--net.screen = 1
+--main = tag({ name = 'main', layout = 'max' })
+--main.screen = 1
+--float = tag({ name = 'float', layout = 'floating' })
+--float.screen = 1
 -- Define a tag table which hold all screen tags.
 tags = {}
-for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
+tags[1] = awful.tag({ "term", "net", "main", "float", 5, 6, 7, 8, 9 }, s, layouts[6])
+if screen.count() > 1 then
+    for s = 2, screen.count() do
+        tags[s] = awful.tag({ 1, 2, 3 }, s, layouts[6])
+    end
 end
 -- }}}
 
@@ -64,7 +79,8 @@ myawesomemenu = {
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "Debian", debian.menu.Debian_menu.Debian },
-                                    { "open terminal", terminal }
+                                    { "open terminal", terminal },
+                                    { "open browser", browser }
                                   }
                         })
 
@@ -74,7 +90,7 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 
 -- {{{ Wibox
 -- Create a textclock widget
-mytextclock = awful.widget.textclock({ align = "right" })
+mytextclock = awful.widget.textclock({ align = "right" }, " %F %T   ")
 
 -- Create a systray
 mysystray = widget({ type = "systray" })
@@ -219,7 +235,32 @@ globalkeys = awful.util.table.join(
                   mypromptbox[mouse.screen].widget,
                   awful.util.eval, nil,
                   awful.util.getdir("cache") .. "/history_eval")
-              end)
+              end),
+
+    -- toe key bindings {{{
+
+        -- use Ctrl+Cursor to change tag
+        awful.key({ "Control",           }, "Left",   awful.tag.viewprev       ),
+        awful.key({ "Control",           }, "Right",  awful.tag.viewnext       ),
+
+        -- run prompt via Alt+F2 (like gmrun and similar)
+        awful.key({ "Mod1" },            "F2",     function () mypromptbox[mouse.screen]:run() end),
+        -- run prompt via Alt+Space (like katapult)
+        awful.key({ "Mod1" },            "space",     function () mypromptbox[mouse.screen]:run() end),
+
+        -- change client by Alt+Tab
+        awful.key({ "Mod1",      }, "Tab",
+            function ()
+                awful.client.focus.byidx( 1)
+                if client.focus then client.focus:raise() end
+            end),
+
+        awful.key({ "Mod1", "Shift" }, "Tab",
+            function ()
+                awful.client.focus.byidx(-1)
+                if client.focus then client.focus:raise() end
+            end)
+    -- }}}
 )
 
 clientkeys = awful.util.table.join(
@@ -297,6 +338,8 @@ awful.rules.rules = {
                      buttons = clientbuttons } },
     { rule = { class = "MPlayer" },
       properties = { floating = true } },
+    { rule = { class = "tilda" },
+      properties = { floating = true } },
     { rule = { class = "pinentry" },
       properties = { floating = true } },
     { rule = { class = "gimp" },
@@ -337,3 +380,22 @@ end)
 client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+
+function run_once(prg,arg_string,pname,screen)
+    if not prg then
+        do return nil end
+    end
+
+    if not pname then
+       pname = prg
+    end
+
+    if not arg_string then 
+        awful.util.spawn_with_shell("pgrep -f -u $USER -x '" .. pname .. "' || (" .. prg .. ")",screen)
+    else
+        awful.util.spawn_with_shell("pgrep -f -u $USER -x '" .. pname .. "' || (" .. prg .. " " .. arg_string .. ")",screen)
+    end
+end
+
+tilda = run_once("tilda", nil, nil, 1)
+
