@@ -242,7 +242,7 @@ globalkeys = awful.util.table.join(
     -- toe key bindings {{{
 
         -- lock screen with Ctrl+Alt+L
-        awful.key({ "Control", "Mod1"    }, "l",   lockscreen   ),
+        awful.key({ "Control", "Mod1",    }, "l",   lockscreen   ),
 
         -- use Ctrl+Cursor to change tag
         awful.key({ "Control",           }, "Left",   awful.tag.viewprev       ),
@@ -253,8 +253,6 @@ globalkeys = awful.util.table.join(
         -- run prompt via Alt+Space (like katapult)
         awful.key({ "Mod1" },            "space",     function () mypromptbox[mouse.screen]:run() end),
 
-        -- close client via Alt+F4
-        awful.key({ "Mod1", }, "F4",      function (c) c:kill()                         end),
         -- change client by Alt+Tab
         awful.key({ "Mod1",      }, "Tab",
             function ()
@@ -273,6 +271,10 @@ globalkeys = awful.util.table.join(
 clientkeys = awful.util.table.join(
     awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
     awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end),
+
+    -- toe: close client via Alt+F4
+    awful.key({ "Mod1",           }, "F4",     function (c) c:kill()                         end),
+
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
     awful.key({ modkey,           }, "o",      awful.client.movetoscreen                        ),
