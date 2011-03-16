@@ -19,6 +19,7 @@ beautiful.init("/usr/share/awesome/themes/default/theme.lua")
 -- This is used later as the default terminal and editor to run.
 terminal = "x-terminal-emulator"
 browser = "x-www-browser"
+lockscreen = "xtrlock"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -60,7 +61,7 @@ layouts =
 -- Define a tag table which hold all screen tags.
 tags = {}
     -- Each screen has its own tag table.
-tags[1] = awful.tag({ "term", "net", "main", "float", 5, 6, 7, 8, 9 }, s, layouts[6])
+tags[1] = awful.tag({ "term", "net", "main", "float", 5, 6, 7, 8, "video" }, s, layouts[6])
 if screen.count() > 1 then
     for s = 2, screen.count() do
         tags[s] = awful.tag({ 1, 2, 3 }, s, layouts[6])
@@ -80,7 +81,8 @@ myawesomemenu = {
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "Debian", debian.menu.Debian_menu.Debian },
                                     { "open terminal", terminal },
-                                    { "open browser", browser }
+                                    { "open browser", browser },
+                                    { "lock screen", lockscreen }
                                   }
                         })
 
@@ -239,6 +241,9 @@ globalkeys = awful.util.table.join(
 
     -- toe key bindings {{{
 
+        -- lock screen with Ctrl+Alt+L
+        awful.key({ "Control", "Mod1"    }, "l",   lockscreen   ),
+
         -- use Ctrl+Cursor to change tag
         awful.key({ "Control",           }, "Left",   awful.tag.viewprev       ),
         awful.key({ "Control",           }, "Right",  awful.tag.viewnext       ),
@@ -248,6 +253,8 @@ globalkeys = awful.util.table.join(
         -- run prompt via Alt+Space (like katapult)
         awful.key({ "Mod1" },            "space",     function () mypromptbox[mouse.screen]:run() end),
 
+        -- close client via Alt+F4
+        awful.key({ "Mod1", }, "F4",      function (c) c:kill()                         end),
         -- change client by Alt+Tab
         awful.key({ "Mod1",      }, "Tab",
             function ()
