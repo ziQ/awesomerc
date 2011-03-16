@@ -406,5 +406,5 @@ function run_once(prg,arg_string,pname,screen)
     end
 end
 
-tilda = run_once("tilda", nil, nil, 1)
+--tilda = run_once("tilda", nil, nil, 1)
 
