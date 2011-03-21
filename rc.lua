@@ -350,6 +350,9 @@ awful.rules.rules = {
     -- Set MPlayer to tag "video" of last screen
     { rule = { class = "MPlayer" }, properties = {tag = tags[screen.count()][9]}, floating = false}, --toe (todo: doesn't work yet, maybe have to use numerical key)
     
+    -- Set Tilda as floating with a fixed position
+    --{ rule = { class = "Tilda" }, properties = {floating = true}, callback = function(c) c:geometry({x=0, y=0}) end},
+
     { rule = { class = "pinentry" },
       properties = { floating = true } },
     { rule = { class = "gimp" },
