@@ -344,6 +344,8 @@ awful.rules.rules = {
     -- Set Tilda as floating with a fixed position
     --{ rule = { class = "Tilda" }, properties = {floating = true}, callback = function(c) c:geometry({x=0, y=0}) end},
 
+    { rule = { class = "xterm" }, --toe
+      callback = awful.titlebar.add },
     { rule = { class = "pinentry" },
       properties = { floating = true } },
     { rule = { class = "gimp" },
