@@ -216,6 +216,7 @@ globalkeys = awful.util.table.join(
 
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
+    awful.key({            }, "F4", function () awful.util.spawn(terminal) end), --toe
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
@@ -239,28 +240,28 @@ globalkeys = awful.util.table.join(
                   awful.util.getdir("cache") .. "/history_eval")
               end),
 
-    -- toe key bindings {{{
+    --toe key bindings {{{
 
         -- lock screen with Ctrl+Alt+L
-        awful.key({ "Control", "Mod1",    }, "l",   lockscreen   ),
+        awful.key({ "Control", "Mod1",    }, "l",   lockscreen   ), --toe (todo)
 
         -- use Ctrl+Cursor to change tag
-        awful.key({ "Control",           }, "Left",   awful.tag.viewprev       ),
-        awful.key({ "Control",           }, "Right",  awful.tag.viewnext       ),
+        awful.key({ "Control",           }, "Left",   awful.tag.viewprev       ), --toe
+        awful.key({ "Control",           }, "Right",  awful.tag.viewnext       ), --toe
 
         -- run prompt via Alt+F2 (like gmrun and similar)
-        awful.key({ "Mod1" },            "F2",     function () mypromptbox[mouse.screen]:run() end),
+        awful.key({ "Mod1" },            "F2",     function () mypromptbox[mouse.screen]:run() end), --toe
         -- run prompt via Alt+Space (like katapult)
-        awful.key({ "Mod1" },            "space",     function () mypromptbox[mouse.screen]:run() end),
+        awful.key({ "Mod1" },            "space",     function () mypromptbox[mouse.screen]:run() end), --toe
 
         -- change client by Alt+Tab
-        awful.key({ "Mod1",      }, "Tab",
+        awful.key({ "Mod1",      }, "Tab", --toe
             function ()
                 awful.client.focus.byidx( 1)
                 if client.focus then client.focus:raise() end
             end),
 
-        awful.key({ "Mod1", "Shift" }, "Tab",
+        awful.key({ "Mod1", "Shift" }, "Tab", --toe
             function ()
                 awful.client.focus.byidx(-1)
                 if client.focus then client.focus:raise() end
@@ -272,8 +273,8 @@ clientkeys = awful.util.table.join(
     awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
     awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end),
 
-    -- toe: close client via Alt+F4
-    awful.key({ "Mod1",           }, "F4",     function (c) c:kill()                         end),
+    --toe: close client via Alt+F4
+    awful.key({ "Mod1",           }, "F4",     function (c) c:kill()                         end), --toe
 
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
