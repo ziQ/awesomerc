@@ -49,15 +49,6 @@ layouts =
 -- }}}
 
 -- {{{ Tags
---term = tag({ name = 'term', layout = 'fair' })
---term.screen = 1
---term.selected = true
---net = tag({ name = 'net', layout = 'max' })
---net.screen = 1
---main = tag({ name = 'main', layout = 'max' })
---main.screen = 1
---float = tag({ name = 'float', layout = 'floating' })
---float.screen = 1
 -- Define a tag table which hold all screen tags.
 tags = {}
     -- Each screen has its own tag table.
