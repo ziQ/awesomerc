@@ -234,7 +234,7 @@ globalkeys = awful.util.table.join(
     --toe key bindings {{{
 
         -- lock screen with Ctrl+Alt+L
-        awful.key({ "Control", "Mod1",    }, "l",   lockscreen   ), --toe (todo)
+        awful.key({ "Control", "Mod1",    }, "l",   function () awful.util.spawn(lockscreen) end   ), --toe (todo)
 
         -- use Ctrl+Cursor to change tag
         awful.key({ "Control",           }, "Left",   awful.tag.viewprev       ), --toe
