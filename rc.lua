@@ -20,6 +20,7 @@ beautiful.init("/usr/share/awesome/themes/default/theme.lua")
 terminal = "x-terminal-emulator"
 browser = "x-www-browser"
 lockscreen = "xtrlock"
+lockscreen = "xscreensaver-command -lock"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
