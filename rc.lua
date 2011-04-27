@@ -402,5 +402,5 @@ function run_once(prg,arg_string,pname,screen)
 end
 
 --tilda = run_once("tilda", nil, nil, 1)
-xscreensaver_instance = run_once("xscreensaver", nil, nil, 1)
+xscreensaver_instance = run_once("xscreensaver", "-nosplash", nil, 1)
 
