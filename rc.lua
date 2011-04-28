@@ -21,6 +21,7 @@ terminal = "x-terminal-emulator"
 browser = "x-www-browser"
 --lockscreen = "xscreensaver-command -lock"
 lockscreen = "xtrlock"
+lockscreen = "xscreensaver-command -lock"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -208,7 +209,7 @@ globalkeys = awful.util.table.join(
 
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
-    awful.key({            }, "F4", function () awful.util.spawn(terminal) end), --toe
+    -- awful.key({            }, "F4", function () awful.util.spawn(terminal) end), --toe
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
@@ -405,4 +406,5 @@ function run_once(prg,arg_string,pname,screen)
 end
 
 --tilda = run_once("tilda", nil, nil, 1)
+xscreensaver_instance = run_once("xscreensaver", "-nosplash", nil, 1)
 
